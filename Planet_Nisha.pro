@@ -1,4 +1,9 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-	Game
+  Game
+
+DISTFILES += \
+  .gitignore \
+  LICENSE \
+  README.md
