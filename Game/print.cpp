@@ -3,19 +3,7 @@
 #include <iostream>
 #include <string>
 
-#if defined(WINDOWS)
-#include <windows.h>
-#endif // OS
-
 void print(std::string text, text_color textColor, bool newLine) {
-#if defined(WINDOWS)
-		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-		DWORD consoleMode;
-		GetConsoleMode(hConsole, &consoleMode);
-		consoleMode |= 0x0004; // ENABLE_VIRTUAL_TERMINAL_PROCESSING
-		consoleMode |= 0x0008; // DISABLE_NEWLINE_AUTO_RETURN
-		SetConsoleMode(hConsole, consoleMode);
-#endif
 		// Print text with ANSI color codes:
 
 		switch (textColor) {
