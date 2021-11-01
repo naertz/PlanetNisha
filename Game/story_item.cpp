@@ -11,39 +11,33 @@ text_color  characterHealthTextColor = CYAN;
 std::string prompt = "";
 std::vector<std::string> options;
 
-unsigned int StoryItem::run()
-{
-    print();
-    if (this->storyText.length() > 0)
-    {
-        print(this->storyText, this->storyTextColor);
-    }
-    
-    print();
-    if (this->eventText.length() > 0)
-    {
-        print(this->eventText, this->eventTextColor);
-    }
-    
-    print();
-    if (this->characterHealthText.length() > 0)
-    {
-        print(this->characterHealthText, characterHealthTextColor);
-    }
-    
-    print();
-    if (this->prompt.length() > 0)
-    {
-        print(this->prompt, BLUE);
-    }
+unsigned int StoryItem::run() {
+	print();
+	if (this->storyText.length() > 0) {
+		print(this->storyText, this->storyTextColor);
+	}
 
-    unsigned int count = 1;
-    for (auto i = this->options.begin(); i != this->options.end(); ++i)
-    {
-        print(std::to_string(count) + ") " + *i);
-        count += 1;
-    }
-    print();
+	print();
+	if (this->eventText.length() > 0) {
+		print(this->eventText, this->eventTextColor);
+	}
 
-    return uint_option(this->options.size());
+	print();
+	if (this->characterHealthText.length() > 0) {
+		print(this->characterHealthText, characterHealthTextColor);
+	}
+
+	print();
+	if (this->prompt.length() > 0) {
+		print(this->prompt, BLUE);
+	}
+
+	unsigned int count = 1;
+	for (auto i = this->options.begin(); i != this->options.end(); ++i) {
+		print(std::to_string(count) + ") " + *i);
+		count += 1;
+	}
+	print();
+
+	return uint_option(this->options.size());
 }
