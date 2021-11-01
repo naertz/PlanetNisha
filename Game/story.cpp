@@ -1,7 +1,12 @@
+#include "Character.h"
 #include "print.h"
 #include "story_item.h"
 #include "user_input.h"
+
+#include <array>
+#include <cstdlib>
 #include <iostream>
+#include <fstream>
 #include <string>
 
 void to_be_continued(const unsigned int noHealChoice)
@@ -162,7 +167,7 @@ void go_to_cave(const unsigned int noHealChoice)
     }
     
     unsigned int beastsChoice = goToCaveItem->run();
-    
+
     if (beastsChoice == 1)
     {
         to_be_continued(noHealChoice);
@@ -306,6 +311,43 @@ void after_no_heal(const unsigned int noHealChoice)
 
 void start_story()
 {
+    const int CHARACTERS_AMOUNT = 5;
+    const int CHARACTER_CLASS_STRING_ELEMENTS = 3;
+    
+    std::string playerLine;
+    std::array<std::string, CHARACTER_CLASS_STRING_ELEMENTS> playerStringElements;
+    unsigned int playerHealth;
+    
+    std::ifstream inputCharacterFile;
+    inputCharacterFile.open("characters.txt");
+    if(!inputCharacterFile.is_open())
+    {
+        print("Could not open file characters.txt", DARK_RED, true);
+    }
+    
+    getline(inputCharacterFile, playerLine);
+    
+    for (int i = 0; i < CHARACTER_CLASS_STRING_ELEMENTS; ++i)
+    {
+        playerStringElements[i] = playerLine.substr(0, playerLine.find("|"));
+        playerLine = playerLine.substr(playerLine.find("|") + 1, playerLine.size());
+    }
+    playerHealth = std::stoi(playerLine);
+    
+    std::ofstream outputCharacterFile;
+    outputCharacterFile.open("characters.txt");
+    if (!outputCharacterFile.is_open())
+    {
+        print("Could not create file characters.txt", DARK_RED, true);
+    }
+    
+    std::array<Character, CHARACTERS_AMOUNT> otherCharacters = { Character(playerStringElements[0], playerStringElements[1], playerStringElements[2], playerHealth), Character("Ragnarok", "Javin", "Engineer", 40), Character("Skylar", "Helen", "Medical Doctor", 90), Character("Joshua", "Trevis", "Astronomist", 40), Character("Leia", "Mist", "Biologist", 50) };
+    for (int i = 1; i < CHARACTERS_AMOUNT; ++i)
+    {
+        outputCharacterFile << otherCharacters[i].getFirstName() << "|" << otherCharacters[i].getLastName() << "|" << otherCharacters[i].getTitle() << "|" << otherCharacters[i].getHealthValue() << std::endl;
+    }
+    
+    
     StoryItem* startItem = new StoryItem();
     
     startItem->storyText = "In this game, you have crashed into Nisha: the planet that the government had funded for colonization.\n"

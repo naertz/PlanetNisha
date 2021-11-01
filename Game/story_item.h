@@ -10,9 +10,9 @@ class StoryItem
 {
     public:
         std::string storyText = "";
-        text_color  storyTextColor = DEFAULT;
+        text_color  storyTextColor = DARK_WHITE;
         std::string eventText = "";
-        text_color  eventTextColor = DEFAULT;
+        text_color  eventTextColor = DARK_WHITE;
         std::string prompt = "";
         std::vector<std::string> options;
         unsigned int run();

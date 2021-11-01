@@ -9,6 +9,51 @@ void print(std::string text, text_color textColor, bool newLine)
     
     switch (textColor)
     {
+        case BLACK:
+        {
+            std::cout << "\033[0;30m" << std::flush;
+            break;
+        }
+        case DARK_RED:
+        {
+            std::cout << "\033[0;31m" << std::flush;
+            break;
+        }
+        case DARK_GREEN:
+        {
+            std::cout << "\033[0;32m" << std::flush;
+            break;
+        }
+        case DARK_YELLOW:
+        {
+            std::cout << "\033[0;33m" << std::flush;
+            break;
+        }
+        case DARK_BLUE:
+        {
+            std::cout << "\033[0;34m" << std::flush;
+            break;
+        }
+        case DARK_MAGENTA:
+        {
+            std::cout << "\033[0;35m" << std::flush;
+            break;
+        }
+        case DARK_CYAN:
+        {
+            std::cout << "\033[0;36m" << std::flush;
+            break;
+        }
+        case DARK_WHITE:
+        {
+            std::cout << "\033[0;37m" << std::flush;
+            break;
+        }
+        case GRAY:
+        {
+            std::cout << "\033[1;30m" << std::flush;
+            break;
+        }
         case RED:
         {
             std::cout << "\033[1;31m" << std::flush;
@@ -39,14 +84,14 @@ void print(std::string text, text_color textColor, bool newLine)
             std::cout << "\033[1;36m" << std::flush;
             break;
         }
-        case BROWN:
+        case WHITE:
         {
-            std::cout << "\033[1;94m" << std::flush;
+            std::cout << "\033[1;37m" << std::flush;
             break;
         }
         default:
         {
-            std::cout << "\033[1;0m" << std::flush;
+            std::cout << "\033[0;37m" << std::flush;
             break;
         }
     }
@@ -58,5 +103,5 @@ void print(std::string text, text_color textColor, bool newLine)
     
     std::cout << text.c_str() << std::flush;
 
-    std::cout << "\033[1;0m" << std::flush;
+    std::cout << "\033[0;37m" << std::flush;
 }

@@ -121,7 +121,7 @@ bool yes_or_no()
     
     print("Enter yes or no (y/n): ", BLUE, false);
     
-    while (!isValidInput)
+    do
     {
         std::getline(std::cin, answer);
         
@@ -140,6 +140,7 @@ bool yes_or_no()
             print("Invalid input. Try again: ", RED, false);
         }
     }
+    while (!isValidInput);
     
     return isAnswerYes;
 }
