@@ -9,7 +9,104 @@
 #include <fstream>
 #include <string>
 
-void to_be_continued(const unsigned int noHealChoice)
+const int CHARACTERS_AMOUNT = 5;
+
+std::string charactersHealthLine(std::array<Character, CHARACTERS_AMOUNT> storyCharacters)
+{
+    std::ofstream outputCharacterFile;
+    outputCharacterFile.open("characters.txt");
+    if (!outputCharacterFile.is_open())
+    {
+        print("Could not create file characters.txt", DARK_RED, true);
+    }
+    
+    for (int i = 0; i < CHARACTERS_AMOUNT; ++i)
+    {
+        outputCharacterFile << storyCharacters[i].getFirstName() << "|" << storyCharacters[i].getLastName() << "|" << storyCharacters[i].getTitle() << "|" << storyCharacters[i].getHealthValue() << std::endl;
+    }
+    
+    std::string charactersHealthLine = "Health: ";
+    
+    for (int i = 0; i < CHARACTERS_AMOUNT - 1; ++i)
+    {
+        charactersHealthLine += "(" + storyCharacters[i].getTitle() + ") " + storyCharacters[i].getFirstName() + " " + storyCharacters[i].getLastName() + ": " + std::to_string(storyCharacters[i].getHealthValue()) + "    ";
+    }
+    charactersHealthLine += "(" + storyCharacters.back().getTitle() + ") " + storyCharacters.back().getFirstName() + " " + storyCharacters.back().getLastName() + ": " + std::to_string(storyCharacters.back().getHealthValue());
+    
+    return charactersHealthLine;
+}
+
+std::array<Character, CHARACTERS_AMOUNT> nextStoryHealth(std::array<unsigned int, CHARACTERS_AMOUNT> healthChange, std::array<bool, CHARACTERS_AMOUNT> isHealing)
+{
+    const int CHARACTER_CLASS_STRING_ELEMENTS = 3;
+    
+    std::string characterLine;
+    std::array<std::string, CHARACTER_CLASS_STRING_ELEMENTS> characterStringElements;
+    unsigned int characterHealth;
+    std::array<Character, CHARACTERS_AMOUNT> storyCharacters;
+    
+    std::ifstream inputCharacterFile;
+    inputCharacterFile.open("characters.txt");
+    if(!inputCharacterFile.is_open())
+    {
+        print("Could not open file characters.txt", DARK_RED, true);
+    }
+    
+    for (int i = 0; i < CHARACTERS_AMOUNT; ++i)
+    {
+        getline(inputCharacterFile, characterLine);
+        for (int j = 0; j < CHARACTER_CLASS_STRING_ELEMENTS; ++j)
+        {
+            characterStringElements[j] = characterLine.substr(0, characterLine.find("|"));
+            characterLine = characterLine.substr(characterLine.find("|") + 1, characterLine.size());
+        }
+        characterHealth = std::stoi(characterLine);
+        
+        storyCharacters[i] = Character(characterStringElements[0], characterStringElements[1], characterStringElements[2], characterHealth);
+    }
+    
+    for (int i = 0; i < CHARACTERS_AMOUNT; ++i)
+    {
+        if (isHealing[i])
+        {
+            storyCharacters[i].recoverHealth(healthChange[i]);
+        }
+        else
+        {
+            storyCharacters[i].loseHealth(healthChange[i]);
+        }
+    }
+    
+    return storyCharacters;
+}
+
+std::string startStoryCharactersHealthLine(std::string playerFirstName, std::string playerLastName)
+{
+    std::ofstream outputCharacterFile;
+    outputCharacterFile.open("characters.txt");
+    if (!outputCharacterFile.is_open())
+    {
+        print("Could not create file characters.txt", DARK_RED, true);
+    }
+    
+    std::array<Character, CHARACTERS_AMOUNT> storyCharacters = { Character(playerFirstName, playerLastName, "Leader", 95), Character("Ragnarok", "Javin", "Engineer", 40), Character("Skylar", "Helen", "Medical Doctor", 90), Character("Joshua", "Trevis", "Astronomist", 40), Character("Leia", "Mist", "Biologist", 50) };
+    for (int i = 0; i < CHARACTERS_AMOUNT; ++i)
+    {
+        outputCharacterFile << storyCharacters[i].getFirstName() << "|" << storyCharacters[i].getLastName() << "|" << storyCharacters[i].getTitle() << "|" << storyCharacters[i].getHealthValue() << std::endl;
+    }
+    
+    std::string charactersHealthLine = "Health: ";
+    
+    for (int i = 0; i < CHARACTERS_AMOUNT - 1; ++i)
+    {
+        charactersHealthLine += "(" + storyCharacters[i].getTitle() + ") " + storyCharacters[i].getFirstName() + " " + storyCharacters[i].getLastName() + ": " + std::to_string(storyCharacters[i].getHealthValue()) + "    ";
+    }
+    charactersHealthLine += "(" + storyCharacters.back().getTitle() + ") " + storyCharacters.back().getFirstName() + " " + storyCharacters.back().getLastName() + ": " + std::to_string(storyCharacters.back().getHealthValue());
+    
+    return charactersHealthLine;
+}
+
+void to_be_continued()
 {
     print("\nTo be continued.\n", RED);
     print("Would you like to play again?\n", YELLOW);
@@ -64,6 +161,26 @@ void travel_large_distance(const unsigned int noHealChoice)
     travelLargeDistanceItem->storyTextColor = MAGENTA;
     travelLargeDistanceItem->eventTextColor = GREEN;
     
+    std::array<unsigned int, CHARACTERS_AMOUNT> healthChange = { 2, 2, 2, 2, 2 };
+    std::array<bool, CHARACTERS_AMOUNT> isHealing;
+    
+    if (noHealChoice == 1)
+    {
+        isHealing = { true, false, true, true, true };
+    }
+    else if (noHealChoice == 2)
+    {
+        isHealing = { true, true, true, false, true };
+    }
+    else
+    {
+        isHealing = { true, true, true, true, false };
+    }
+    
+    std::array<Character, CHARACTERS_AMOUNT> storyCharacters = nextStoryHealth(healthChange, isHealing);
+    
+    travelLargeDistanceItem->characterHealthText = charactersHealthLine(storyCharacters);
+    
     travelLargeDistanceItem->prompt = "You now must make a decision among the following options:";
     
     travelLargeDistanceItem->options =
@@ -77,15 +194,15 @@ void travel_large_distance(const unsigned int noHealChoice)
     
     if (afterTravelLargeDistanceChoice == 1)
     {
-        to_be_continued(noHealChoice);
+        to_be_continued();
     }
     else if (afterTravelLargeDistanceChoice == 2)
     {
-        to_be_continued(noHealChoice);
+        to_be_continued();
     }
     else
     {
-        to_be_continued(noHealChoice);
+        to_be_continued();
     }
 }
 
@@ -144,6 +261,13 @@ void go_to_cave(const unsigned int noHealChoice)
     goToCaveItem->storyTextColor = MAGENTA;
     goToCaveItem->eventTextColor = GREEN;
     
+    std::array<unsigned int, CHARACTERS_AMOUNT> healthChange = { 15, 15, 15, 15, 15 };
+    std::array<bool, CHARACTERS_AMOUNT> isHealing = { false, false, false, false, false };
+    
+    std::array<Character, CHARACTERS_AMOUNT> storyCharacters = nextStoryHealth(healthChange, isHealing);
+    
+    goToCaveItem->characterHealthText = charactersHealthLine(storyCharacters);
+    
     goToCaveItem->prompt = "You can choose from the following options:";
     
     if (noHealChoice == 3)
@@ -170,15 +294,15 @@ void go_to_cave(const unsigned int noHealChoice)
 
     if (beastsChoice == 1)
     {
-        to_be_continued(noHealChoice);
+        to_be_continued();
     }
     else if (beastsChoice == 2)
     {
-        to_be_continued(noHealChoice);
+        to_be_continued();
     }
     else
     {
-        to_be_continued(noHealChoice);
+        to_be_continued();
     }
 }
 
@@ -233,6 +357,26 @@ void stay_at_ship(const unsigned int noHealChoice)
     stayAtShipItem->storyTextColor = MAGENTA;
     stayAtShipItem->eventTextColor = GREEN;
     
+    std::array<unsigned int, CHARACTERS_AMOUNT> healthChange;
+    std::array<bool, CHARACTERS_AMOUNT> isHealing = { false, false, false, false, false };
+    
+    if (noHealChoice == 1)
+    {
+        healthChange = { 3, 5, 3, 3, 3 };
+    }
+    else if (noHealChoice == 2)
+    {
+        healthChange = { 3, 3, 3, 5, 3 };
+    }
+    else
+    {
+        healthChange = { 3, 3, 3, 3, 5 };
+    }
+    
+    std::array<Character, CHARACTERS_AMOUNT> storyCharacters = nextStoryHealth(healthChange, isHealing);
+    
+    stayAtShipItem->characterHealthText = charactersHealthLine(storyCharacters);
+    
     stayAtShipItem->prompt = "You are given the following options:";
     
     stayAtShipItem->options =
@@ -246,15 +390,15 @@ void stay_at_ship(const unsigned int noHealChoice)
     
     if (afterStayAtShipChoice == 1)
     {
-        to_be_continued(noHealChoice);
+        to_be_continued();
     }
     else if (afterStayAtShipChoice == 2)
     {
-        to_be_continued(noHealChoice);
+        to_be_continued();
     }
     else
     {
-        to_be_continued(noHealChoice);
+        to_be_continued();
     }
 }
 
@@ -284,6 +428,29 @@ void after_no_heal(const unsigned int noHealChoice)
     afterNoHealItem->storyTextColor = RED;
     afterNoHealItem->eventTextColor = GREEN;
     
+    std::array<unsigned int, CHARACTERS_AMOUNT> healthChange;
+    std::array<bool, CHARACTERS_AMOUNT> isHealing;
+    
+    if (noHealChoice == 1)
+    {
+        healthChange = { 3, 5, 3, 10, 10 };
+        isHealing = { true, false, true, true, true };
+    }
+    else if (noHealChoice == 2)
+    {
+        healthChange = { 3, 10, 3, 7, 10 };
+        isHealing = { true, true, true, false, true };
+    }
+    else
+    {
+        healthChange = { 3, 10, 3, 10, 7 };
+        isHealing = { true, true, true, true, false };
+    }
+    
+    std::array<Character, CHARACTERS_AMOUNT> storyCharacters = nextStoryHealth(healthChange, isHealing);
+    
+    afterNoHealItem->characterHealthText = charactersHealthLine(storyCharacters);
+    
     afterNoHealItem->prompt = "You are given the following options:";
     
     afterNoHealItem->options =
@@ -309,45 +476,8 @@ void after_no_heal(const unsigned int noHealChoice)
     }
 }
 
-void start_story()
+void start_story(std::string playerFirstName, std::string playerLastName)
 {
-    const int CHARACTERS_AMOUNT = 5;
-    const int CHARACTER_CLASS_STRING_ELEMENTS = 3;
-    
-    std::string playerLine;
-    std::array<std::string, CHARACTER_CLASS_STRING_ELEMENTS> playerStringElements;
-    unsigned int playerHealth;
-    
-    std::ifstream inputCharacterFile;
-    inputCharacterFile.open("characters.txt");
-    if(!inputCharacterFile.is_open())
-    {
-        print("Could not open file characters.txt", DARK_RED, true);
-    }
-    
-    getline(inputCharacterFile, playerLine);
-    
-    for (int i = 0; i < CHARACTER_CLASS_STRING_ELEMENTS; ++i)
-    {
-        playerStringElements[i] = playerLine.substr(0, playerLine.find("|"));
-        playerLine = playerLine.substr(playerLine.find("|") + 1, playerLine.size());
-    }
-    playerHealth = std::stoi(playerLine);
-    
-    std::ofstream outputCharacterFile;
-    outputCharacterFile.open("characters.txt");
-    if (!outputCharacterFile.is_open())
-    {
-        print("Could not create file characters.txt", DARK_RED, true);
-    }
-    
-    std::array<Character, CHARACTERS_AMOUNT> otherCharacters = { Character(playerStringElements[0], playerStringElements[1], playerStringElements[2], playerHealth), Character("Ragnarok", "Javin", "Engineer", 40), Character("Skylar", "Helen", "Medical Doctor", 90), Character("Joshua", "Trevis", "Astronomist", 40), Character("Leia", "Mist", "Biologist", 50) };
-    for (int i = 1; i < CHARACTERS_AMOUNT; ++i)
-    {
-        outputCharacterFile << otherCharacters[i].getFirstName() << "|" << otherCharacters[i].getLastName() << "|" << otherCharacters[i].getTitle() << "|" << otherCharacters[i].getHealthValue() << std::endl;
-    }
-    
-    
     StoryItem* startItem = new StoryItem();
     
     startItem->storyText = "In this game, you have crashed into Nisha: the planet that the government had funded for colonization.\n"
@@ -361,6 +491,7 @@ void start_story()
                            "and there are only enough supplies for two of the injured survivors.\n"
                            "\n"
                            "Read the following options, enter the corresponding number to your selected option, and press Enter.";
+    startItem->characterHealthText = startStoryCharactersHealthLine(playerFirstName, playerLastName);
     
     startItem->storyTextColor = MAGENTA;
     startItem->eventTextColor = GREEN;

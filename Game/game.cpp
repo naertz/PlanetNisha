@@ -8,10 +8,8 @@
 
 int main()
 {
-    std::ofstream characterFile; // Output file stream for characters.txt
-    
-    std::string firstName;
-    std::string lastName;
+    std::string playerFirstName;
+    std::string playerLastName;
     
     bool playGameChoice = true;
     
@@ -22,16 +20,16 @@ int main()
     // Get user to input their first name.
     print("First Name: ", DARK_WHITE, false);
     
-    firstName = get_text(true);
+    playerFirstName = get_text(true);
     
     
     // Get user to input their last name.
     print("Last Name: ", DARK_WHITE, false);
     
-    lastName = get_text(true);
+    playerLastName = get_text(true);
     
     print("");
-    print("Hello, " + firstName + " " + lastName + "!");
+    print("Hello, " + playerFirstName + " " + playerLastName + "!");
     
     print("");
     print("Are you ready to play Planet Nisha? ");
@@ -44,15 +42,7 @@ int main()
         {
             print("Let's begin.\n");
             
-            characterFile.open("characters.txt");
-            if (!characterFile.is_open())
-            {
-                print("Could not create file characters.txt", DARK_RED, true);
-            }
-            
-            characterFile << firstName << "|" << lastName << "|" << "Leader" << "|" << "95" << std::endl;
-            
-            start_story(); // Start game
+            start_story(playerFirstName, playerLastName); // Start game
         }
     }
     

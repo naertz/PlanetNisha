@@ -13,6 +13,8 @@ class StoryItem
         text_color  storyTextColor = DARK_WHITE;
         std::string eventText = "";
         text_color  eventTextColor = DARK_WHITE;
+        std::string characterHealthText = "";
+        text_color  characterHealthTextColor = CYAN;
         std::string prompt = "";
         std::vector<std::string> options;
         unsigned int run();

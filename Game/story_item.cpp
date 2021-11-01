@@ -6,6 +6,8 @@ std::string storyText = "";
 text_color  storyTextColor = DARK_WHITE;
 std::string eventText = "";
 text_color  eventTextColor = DARK_WHITE;
+std::string characterHealthText = "";
+text_color  characterHealthTextColor = CYAN;
 std::string prompt = "";
 std::vector<std::string> options;
 
@@ -21,6 +23,12 @@ unsigned int StoryItem::run()
     if (this->eventText.length() > 0)
     {
         print(this->eventText, this->eventTextColor);
+    }
+    
+    print();
+    if (this->characterHealthText.length() > 0)
+    {
+        print(this->characterHealthText, characterHealthTextColor);
     }
     
     print();
