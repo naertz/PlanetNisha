@@ -3,10 +3,6 @@
 
 #if defined(_WIN32) || defined(_WIN64)
 #define WINDOWS
-#elif defined(__unix__) || defined(__APPLE__) || defined(__MACH__)
-#define NIX
-#else
-#define UNKNOWN
 #endif // OS Definitions
 
 #include <string>

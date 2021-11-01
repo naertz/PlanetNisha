@@ -8,71 +8,14 @@
 #endif // OS
 
 void print(std::string text, text_color textColor, bool newLine) {
-		#if defined(WINDOWS)
-		// Print text with Windows console colors:
-
+#if defined(WINDOWS)
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
-		switch (textColor) {
-				case BLACK: {
-						SetConsoleTextAttribute(hConsole, BLACK);
-						break;
-				} case DARK_BLUE: {
-						SetConsoleTextAttribute(hConsole, DARK_BLUE);
-						break;
-				} case DARK_GREEN: {
-						SetConsoleTextAttribute(hConsole, DARK_GREEN);
-						break;
-				} case DARK_CYAN: {
-						SetConsoleTextAttribute(hConsole, DARK_CYAN);
-						break;
-				} case DARK_RED: {
-						SetConsoleTextAttribute(hConsole, DARK_RED);
-						break;
-				} case DARK_MAGENTA: {
-						SetConsoleTextAttribute(hConsole, DARK_MAGENTA);
-						break;
-				} case DARK_YELLOW: {
-						SetConsoleTextAttribute(hConsole, DARK_YELLOW);
-						break;
-				} case DARK_WHITE: {
-						SetConsoleTextAttribute(hConsole, DARK_WHITE);
-						break;
-				} case GRAY: {
-						SetConsoleTextAttribute(hConsole, GRAY);
-						break;
-				} case BLUE: {
-						SetConsoleTextAttribute(hConsole, BLUE);
-						break;
-				} case GREEN: {
-						SetConsoleTextAttribute(hConsole, GREEN);
-						break;
-				} case CYAN: {
-						SetConsoleTextAttribute(hConsole, CYAN);
-						break;
-				} case RED: {
-						SetConsoleTextAttribute(hConsole, RED);
-						break;
-				} case MAGENTA: {
-						SetConsoleTextAttribute(hConsole, MAGENTA);
-						break;
-				} case YELLOW: {
-						SetConsoleTextAttribute(hConsole, YELLOW);
-						break;
-				} case WHITE: {
-						SetConsoleTextAttribute(hConsole, WHITE);
-						break;
-				}
-		}
-
-		if (newLine) {
-				std::cout << text << std::endl;
-		} else {
-				std::cout << text << std::flush;
-		}
-
-		SetConsoleTextAttribute(hConsole, DARK_WHITE);
-		#elif defined(NIX) || defined(UNKNOWN)
+		DWORD consoleMode;
+		GetConsoleMode(hConsole, &consoleMode);
+		consoleMode |= 0x0004; // ENABLE_VIRTUAL_TERMINAL_PROCESSING
+		consoleMode |= 0x0008; // DISABLE_NEWLINE_AUTO_RETURN
+		SetConsoleMode(hConsole, consoleMode);
+#endif
 		// Print text with ANSI color codes:
 
 		switch (textColor) {
@@ -135,5 +78,4 @@ void print(std::string text, text_color textColor, bool newLine) {
 		}
 
 		std::cout << text.c_str() << "\033[0;37m" << std::flush;
-		#endif
 }
