@@ -14,7 +14,7 @@ int main()
     print("");
     
     // Get user to input their name
-    print("Name: ", "", false);
+    print("Name: ", DEFAULT, false);
     
     name = get_text(true);
     
@@ -35,7 +35,7 @@ int main()
         }
     }
     
-    print("\nGame Over.", "cyan");
+    print("\nGame Over.", CYAN);
     print("");
     
     return 0;

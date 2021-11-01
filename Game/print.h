@@ -3,6 +3,8 @@
 
 #include <string>
 
-void print(std::string text="", std::string textColour="", bool newLine=true);
+enum text_color { RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, BROWN, DEFAULT };
+
+void print(std::string text = "", text_color textColor = DEFAULT, bool newLine=true);
 
 #endif // PRINT_H

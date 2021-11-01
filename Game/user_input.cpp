@@ -9,11 +9,11 @@
 
 enum string_to_uint_error { SUCCESS, OUT_OF_RANGE, INCONVERTIBLE };
 
-string_to_uint_error valid_string_to_unit (uint &parsedUnsignedInteger, const char *stringInputPointer, int base = 0)
+string_to_uint_error valid_string_to_uint (unsigned int &parsedUnsignedInteger, const char *stringInputPointer, int base = 0)
 {
     string_to_uint_error errorResult;
     char *end;
-    ulong unsignedLongToParse;
+    unsigned long unsignedLongToParse;
     
     errno = 0;
     
@@ -37,18 +37,18 @@ string_to_uint_error valid_string_to_unit (uint &parsedUnsignedInteger, const ch
     else
     {
         errorResult = SUCCESS;
-        parsedUnsignedInteger = static_cast<uint>(unsignedLongToParse);
+        parsedUnsignedInteger = static_cast<unsigned int>(unsignedLongToParse);
     }
     
     return errorResult;
 }
 
-uint string_to_uint(std::string stringInput)
+unsigned int string_to_uint(std::string stringInput)
 {
     const char * stringInputPointer = stringInput.c_str();
-    uint unsignedIntegerFromString = 0;
+    unsigned int unsignedIntegerFromString = 0;
     
-    string_to_uint_error errorResult = valid_string_to_unit(unsignedIntegerFromString, stringInputPointer);
+    string_to_uint_error errorResult = valid_string_to_uint(unsignedIntegerFromString, stringInputPointer);
     
     if (errorResult != SUCCESS)
     {
@@ -101,7 +101,7 @@ std::string get_text(bool isName)
         
         if (!valid_text(textInput, isName))
         {
-            print("Invalid input. Try again...", "red");
+            print("Invalid input. Try again...", RED);
         }
         else
         {
@@ -119,7 +119,7 @@ bool yes_or_no()
     bool isAnswerYes;
     bool isValidInput = false;
     
-    print("Enter yes or no (y/n): ", "blue", false);
+    print("Enter yes or no (y/n): ", BLUE, false);
     
     while (!isValidInput)
     {
@@ -137,24 +137,24 @@ bool yes_or_no()
         }
         else
         {
-            print("Invalid input. Try again: ", "red", false);
+            print("Invalid input. Try again: ", RED, false);
         }
     }
     
     return isAnswerYes;
 }
 
-uint uint_option(uint maxDigit)
+unsigned int uint_option(unsigned int maxDigit)
 {
     std::string prompt = "Enter a value between 1 and " + std::to_string(maxDigit) + ": ";
     
     std::string stringInput = "0";
     
-    uint answer = 0;
+    unsigned int answer = 0;
     
     bool isValidInput = false;
     
-    print(prompt, "blue", false);
+    print(prompt, BLUE, false);
     
     while (!isValidInput)
     {
@@ -171,8 +171,8 @@ uint uint_option(uint maxDigit)
         }
         else
         {
-            print("Invalid input. Try again...", "red");
-            print(prompt, "blue", false);
+            print("Invalid input. Try again...", RED);
+            print(prompt, BLUE, false);
         }
     }
     

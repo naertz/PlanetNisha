@@ -2,26 +2,34 @@
 #include "print.h"
 #include "user_input.h"
 
-std::string preText = "";
-std::string preTextColour = "";
+std::string storyText = "";
+text_color  storyTextColor = DEFAULT;
+std::string eventText = "";
+text_color  eventTextColor = DEFAULT;
 std::string prompt = "";
 std::vector<std::string> options;
 
-uint StoryItem::run()
+unsigned int StoryItem::run()
 {
     print();
-    if (this->preText.length() > 0)
+    if (this->storyText.length() > 0)
     {
-        print(this->preText, this->preTextColour);
+        print(this->storyText, this->storyTextColor);
     }
-
+    
+    print();
+    if (this->eventText.length() > 0)
+    {
+        print(this->eventText, this->eventTextColor);
+    }
+    
     print();
     if (this->prompt.length() > 0)
     {
-        print(this->prompt, "blue");
+        print(this->prompt, BLUE);
     }
 
-    uint count = 1;
+    unsigned int count = 1;
     for (auto i = this->options.begin(); i != this->options.end(); ++i)
     {
         print(std::to_string(count) + ") " + *i);
