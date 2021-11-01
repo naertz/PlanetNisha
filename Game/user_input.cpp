@@ -1,14 +1,61 @@
 #include "print.h"
 #include "user_input.h"
 
+#include <climits>
 #include <cstdlib>
+#include <errno.h>
 #include <iostream>
 #include <string>
 
-int int_to_string(std::string stringInput)
+enum string_to_uint_error { SUCCESS, OUT_OF_RANGE, INCONVERTIBLE };
+
+string_to_uint_error valid_string_to_unit (uint &parsedUnsignedInteger, const char *stringInputPointer, int base = 0)
 {
-    int integerFromString = std::atoi(stringInput.c_str());
-    return integerFromString;
+    string_to_uint_error errorResult;
+    char *end;
+    ulong unsignedLongToParse;
+    
+    errno = 0;
+    
+    unsignedLongToParse = std::strtoul(stringInputPointer, &end, base);
+    
+    if ((errno == ERANGE && unsignedLongToParse == ULONG_MAX) || unsignedLongToParse > UINT_MAX)
+    {
+        if (*stringInputPointer == '\0' || *end != '\0')
+        {
+            errorResult = INCONVERTIBLE;
+        }
+        else
+        {
+            errorResult = OUT_OF_RANGE;
+        }
+    }
+    else if (*stringInputPointer == '\0' || *end != '\0')
+    {
+        errorResult = INCONVERTIBLE;
+    }
+    else
+    {
+        errorResult = SUCCESS;
+        parsedUnsignedInteger = static_cast<uint>(unsignedLongToParse);
+    }
+    
+    return errorResult;
+}
+
+uint string_to_uint(std::string stringInput)
+{
+    const char * stringInputPointer = stringInput.c_str();
+    uint unsignedIntegerFromString = 0;
+    
+    string_to_uint_error errorResult = valid_string_to_unit(unsignedIntegerFromString, stringInputPointer);
+    
+    if (errorResult != SUCCESS)
+    {
+        unsignedIntegerFromString = 0;
+    }
+    
+    return unsignedIntegerFromString;
 }
 
 bool valid_name(std::string nameInput)
@@ -97,22 +144,17 @@ bool yes_or_no()
     return isAnswerYes;
 }
 
-int int_option(int maxDigit)
+uint uint_option(uint maxDigit)
 {
     std::string prompt = "Enter a value between 1 and " + std::to_string(maxDigit) + ": ";
     
-    std::string stringInput = "-1";
+    std::string stringInput = "0";
     
-    int answer = 0;
+    uint answer = 0;
     
     bool isValidInput = false;
     
     print(prompt, "blue", false);
-    
-    if (std::cin.peek() == '\n')
-    {
-        std::cin.ignore();
-    }
     
     while (!isValidInput)
     {
@@ -120,7 +162,7 @@ int int_option(int maxDigit)
         
         if (stringInput.length() == 1)
         {
-            answer = int_to_string(stringInput);
+            answer = string_to_uint(stringInput);
         }
         
         if (answer > 0 && answer <= maxDigit)

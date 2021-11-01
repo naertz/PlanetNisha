@@ -6,6 +6,6 @@
 bool valid_name(std::string test_name);
 std::string get_text(bool name = false);
 bool yes_or_no();
-int int_option(int maxDigit);
+uint uint_option(uint maxDigit);
 
 #endif // USER_INPUT_H

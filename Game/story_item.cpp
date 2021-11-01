@@ -7,7 +7,7 @@ std::string preTextColour = "";
 std::string prompt = "";
 std::vector<std::string> options;
 
-int StoryItem::run()
+uint StoryItem::run()
 {
     print();
     if (this->preText.length() > 0)
@@ -21,7 +21,7 @@ int StoryItem::run()
         print(this->prompt, "blue");
     }
 
-    int count = 1;
+    uint count = 1;
     for (auto i = this->options.begin(); i != this->options.end(); ++i)
     {
         print(std::to_string(count) + ") " + *i);
@@ -29,5 +29,5 @@ int StoryItem::run()
     }
     print();
 
-    return int_option(this->options.size());
+    return uint_option(this->options.size());
 }

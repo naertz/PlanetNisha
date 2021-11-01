@@ -4,15 +4,13 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
-
-void to_be_continued(const int noHealChoice)
+void to_be_continued(const uint noHealChoice)
 {
     print("\nTo be continued.\n", "green");
     print("Would you like to play again?\n", "yellow");
 }
 
-void travel_large_distance(const int noHealChoice)
+void travel_large_distance(const uint noHealChoice)
 {
     StoryItem* travelLargeDistanceItem = new StoryItem();
     
@@ -72,7 +70,7 @@ void travel_large_distance(const int noHealChoice)
         "Start constructing your base by the ocean." // 3
     };
     
-    int afterTravelLargeDistanceChoice = travelLargeDistanceItem->run();
+    uint afterTravelLargeDistanceChoice = travelLargeDistanceItem->run();
     
     if (afterTravelLargeDistanceChoice == 1)
     {
@@ -88,7 +86,7 @@ void travel_large_distance(const int noHealChoice)
     }
 }
 
-void go_to_cave(const int noHealChoice)
+void go_to_cave(const uint noHealChoice)
 {
     StoryItem* goToCaveItem = new StoryItem();
     
@@ -167,7 +165,7 @@ void go_to_cave(const int noHealChoice)
         };
     }
     
-    int beastsChoice = goToCaveItem->run();
+    uint beastsChoice = goToCaveItem->run();
     
     if (beastsChoice == 1)
     {
@@ -183,7 +181,7 @@ void go_to_cave(const int noHealChoice)
     }
 }
 
-void stay_at_ship(const int noHealChoice)
+void stay_at_ship(const uint noHealChoice)
 {
     StoryItem* stayAtShipItem = new StoryItem();
     
@@ -245,7 +243,7 @@ void stay_at_ship(const int noHealChoice)
         "Focus on healing your people." // 3
     };
     
-    int afterStayAtShipChoice = stayAtShipItem->run();
+    uint afterStayAtShipChoice = stayAtShipItem->run();
     
     if (afterStayAtShipChoice == 1)
     {
@@ -261,7 +259,7 @@ void stay_at_ship(const int noHealChoice)
     }
 }
 
-void after_no_heal(const int noHealChoice)
+void after_no_heal(const uint noHealChoice)
 {
     StoryItem* afterNoHealItem = new StoryItem();
     
@@ -298,7 +296,7 @@ void after_no_heal(const int noHealChoice)
         "Bring some valuable tools and materials from the ship and travel a large distance to find a less suspicious hideout." // 3
     };
     
-    int hideoutChoice = afterNoHealItem->run();
+    uint hideoutChoice = afterNoHealItem->run();
     
     if (hideoutChoice == 1)
     {
@@ -342,7 +340,7 @@ void start_story()
         "Biologist Leia Mist's - burned face" // 3
     };
     
-    int noHealChoice = startItem->run();
+    uint noHealChoice = startItem->run();
     
     after_no_heal(noHealChoice);
 }

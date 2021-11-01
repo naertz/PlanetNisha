@@ -11,7 +11,7 @@ class StoryItem
         std::string preTextColour = "";
         std::string prompt = "";
         std::vector<std::string> options;
-        int run();
+        uint run();
 };
 
 #endif // STORY_ITEM_H
