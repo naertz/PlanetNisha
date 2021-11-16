@@ -1,7 +1,8 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-  Console_Game
+  Console_Game \
+  NCURSES_TUI_Game
 
 DISTFILES += \
   .gitignore \
