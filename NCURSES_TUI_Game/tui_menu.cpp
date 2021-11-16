@@ -1,6 +1,10 @@
 #include "tui_menu.h"
 
+#if defined(_WIN32) || defined(_WIN64)
+#include <ncursesw/ncurses.h>
+#else
 #include <ncurses.h>
+#endif
 
 #include "tui_input_manager.h"
 #include "tui_ncurses.h"

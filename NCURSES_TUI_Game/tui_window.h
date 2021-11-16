@@ -1,7 +1,11 @@
 #ifndef TUIWINDOW_H
 #define TUIWINDOW_H
 
+#if defined(_WIN32) || defined(_WIN64)
+#include <ncursesw/ncurses.h>
+#else
 #include <ncurses.h>
+#endif
 #include <string>
 
 class TUIWindow {

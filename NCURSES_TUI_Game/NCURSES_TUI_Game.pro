@@ -4,7 +4,9 @@ CONFIG += console c++11
 CONFIG -= app_bundle
 CONFIG -= qt
 
-LIBS += -lncurses
+win32:INCLUDEPATH += C:/Qt/Tools/mingw730_64/opt/include
+win32:LIBS += -L C:/Qt/Tools/mingw730_64/opt/lib -lncurses
+unix:LIBS += -lncurses
 
 SOURCES += \
         start.cpp \
