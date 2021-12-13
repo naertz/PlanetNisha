@@ -36,3 +36,6 @@ HEADERS += \
   tui_state_manager_quit_exception.h \
   tui_state_menu.h \
   tui_window.h
+
+DISTFILES += \
+  README.md
