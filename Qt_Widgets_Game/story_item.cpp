@@ -10,7 +10,7 @@ StoryItem::StoryItem(std::string const &story_text, std::string const &event_tex
   : story_text(story_text)
   , event_text(event_text)
   , prompt_text(prompt_text) {
-	if (options.size() >= 1) {
+	if (!options.empty()) {
 		this->options = options;
 	} else {
 		throw std::invalid_argument("Options cannot be empty.");
