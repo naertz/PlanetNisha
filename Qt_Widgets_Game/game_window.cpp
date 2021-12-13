@@ -31,7 +31,8 @@ void GameWindow::select_first_choice() {
 	if (current_story_item) {
 		setup_ui_texts(current_story_item);
 	} else {
-		GameWindow::close();
+		current_story_item = first_story_item;
+		setup_ui_texts(current_story_item);
 	}
 }
 

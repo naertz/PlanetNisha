@@ -8,6 +8,7 @@ static StoryItem *after_no_heal(int const no_heal_choice);
 static StoryItem *stay_at_ship(int const no_heal_choice);
 static StoryItem *go_to_cave(int const no_heal_choice);
 static StoryItem *travel_large_distance(int const no_heal_choice);
+static StoryItem *to_be_continued();
 
 /****************/
 /* First Branch */
@@ -150,9 +151,9 @@ static StoryItem *stay_at_ship(int const no_heal_choice) {
 	}
 
 	std::vector<StoryItem*> story_items {
-		nullptr,
-		nullptr,
-		nullptr
+		to_be_continued(),
+		to_be_continued(),
+		to_be_continued()
 	};
 
 	std::vector<StoryItemOption> story_options {
@@ -209,9 +210,9 @@ static StoryItem *go_to_cave(int const no_heal_choice) {
 	}
 
 	std::vector<StoryItem*> story_items {
-		nullptr,
-		nullptr,
-		nullptr
+		to_be_continued(),
+		to_be_continued(),
+		to_be_continued()
 	};
 
 	std::vector<StoryItemOption> story_options {
@@ -268,6 +269,36 @@ static StoryItem *travel_large_distance(int const no_heal_choice) {
 	}
 
 	std::vector<StoryItem*> story_items {
+		to_be_continued(),
+		to_be_continued(),
+		to_be_continued()
+	};
+
+	std::vector<StoryItemOption> story_options {
+		{ options_texts[0], story_items[0] },
+		{ options_texts[1], story_items[1] },
+		{ options_texts[2], story_items[2] }
+	};
+
+	StoryItem *travel_large_distance = new StoryItem(story_text, event_text, prompt_text, story_options);
+	return travel_large_distance;
+}
+
+/*****************/
+/* Fourth Branch */
+/*****************/
+
+static StoryItem *to_be_continued() {
+	std::string story_text = "To be continued...";
+	std::string event_text = "Thank you for playing.";
+	std::string prompt_text = "Created by Noah Allan Ertz";
+	std::vector<std::string> options_texts {
+		"Play again",
+		"Exit happily",
+		"Exit sadly"
+	};
+
+	std::vector<StoryItem*> story_items {
 		nullptr,
 		nullptr,
 		nullptr
@@ -279,6 +310,6 @@ static StoryItem *travel_large_distance(int const no_heal_choice) {
 		{ options_texts[2], story_items[2] }
 	};
 
-	StoryItem *travel_large_distance = new StoryItem(story_text, event_text, prompt_text, story_options);
-	return travel_large_distance;
+	StoryItem *to_be_continued = new StoryItem(story_text, event_text, prompt_text, story_options);
+	return to_be_continued;
 }
