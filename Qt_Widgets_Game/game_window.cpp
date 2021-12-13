@@ -61,7 +61,7 @@ void GameWindow::setup_ui_texts(StoryItem *const current_story_item) {
 	ui->story_text_browser->setText(QString::fromStdString(current_story_item->get_story_text()));
 	ui->event_text_browser->setText(QString::fromStdString(current_story_item->get_event_text()));
 	ui->prompt_text_browser->setText(QString::fromStdString(current_story_item->get_prompt_text()));
-	ui->first_choice_button->setText(QString::fromStdString(current_story_item->get_options()[0].get_option_text()));
-	ui->second_choice_button->setText(QString::fromStdString(current_story_item->get_options()[1].get_option_text()));
-	ui->third_choice_button->setText(QString::fromStdString(current_story_item->get_options()[2].get_option_text()));
+	ui->first_option_text_browser->setText(QString::fromStdString(current_story_item->get_options()[0].get_option_text()));
+	ui->second_option_text_browser->setText(QString::fromStdString(current_story_item->get_options()[1].get_option_text()));
+	ui->third_option_text_browser->setText(QString::fromStdString(current_story_item->get_options()[2].get_option_text()));
 }
