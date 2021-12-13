@@ -1,5 +1,7 @@
 #include "story_item.h"
 
+#include <stdexcept>
+
 /****************/
 /* Constructors */
 /****************/
@@ -7,8 +9,13 @@
 StoryItem::StoryItem(std::string const &story_text, std::string const &event_text, std::string const &prompt_text, std::vector<StoryItemOption> const &options)
   : story_text(story_text)
   , event_text(event_text)
-  , prompt_text(prompt_text)
-  , options(options) { }
+  , prompt_text(prompt_text) {
+	if (options.size() >= 1) {
+		this->options = options;
+	} else {
+		throw std::invalid_argument("Options cannot be empty.");
+	}
+}
 
 /*************/
 /* Accessors */

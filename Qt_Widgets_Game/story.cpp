@@ -1,5 +1,8 @@
 #include "story.h"
 
+#include <iostream>
+#include <stdexcept>
+
 /*************************/
 /* Function Declarations */
 /*************************/
@@ -24,13 +27,19 @@ StoryItem *start_story() {
 		"Biologist Leia Mist - burned face"
 	};
 
-	std::vector<StoryItem*> story_items {
-		after_no_heal(0),
-		after_no_heal(1),
-		after_no_heal(2)
-	};
+std::vector<StoryItem*> story_items;
 
-	std::vector<StoryItemOption> story_options {
+  try {
+	  story_items = {
+		  after_no_heal(0),
+		  after_no_heal(1),
+		  after_no_heal(2)
+		};
+  } catch (std::invalid_argument const &exception) {
+	  throw exception;
+  }
+
+  std::vector<StoryItemOption> story_options {
 		{ options_texts[0], story_items[0] },
 		{ options_texts[1], story_items[1] },
 		{ options_texts[2], story_items[2] }
@@ -85,13 +94,22 @@ static StoryItem *after_no_heal(int const no_heal_choice) {
 			  "Bring some valuable tools and materials from the ship and travel a large distance to find a less suspicious hideout."
 			};
 			break;
+		default:
+			char const *bad_heal_choice = "No heal choice must be between 0-2.";
+			throw std::invalid_argument(bad_heal_choice);
 	}
 
-	std::vector<StoryItem*> story_items {
-		stay_at_ship(no_heal_choice),
-		go_to_cave(no_heal_choice),
-		travel_large_distance(no_heal_choice)
-	};
+	std::vector<StoryItem*> story_items;
+
+	try {
+		story_items = {
+		  stay_at_ship(no_heal_choice),
+		  go_to_cave(no_heal_choice),
+		  travel_large_distance(no_heal_choice)
+		};
+	} catch (std::invalid_argument const &exception) {
+		throw exception;
+	}
 
 	std::vector<StoryItemOption> story_options {
 		{ options_texts[0], story_items[0] },
@@ -148,6 +166,8 @@ static StoryItem *stay_at_ship(int const no_heal_choice) {
 			  "Focus on healing your people."
 			};
 			break;
+		default:
+			throw std::invalid_argument("No heal choice must be between 0-2.");
 	}
 
 	std::vector<StoryItem*> story_items {
@@ -207,6 +227,8 @@ static StoryItem *go_to_cave(int const no_heal_choice) {
 			  "Focus on healing your people to have more people to defend against the beasts. Once (Biologist) Leia Mist has healed, direct her towards finding food that is safe to eat."
 			};
 			break;
+		default:
+			throw std::invalid_argument("No heal choice must be between 0-2.");
 	}
 
 	std::vector<StoryItem*> story_items {
@@ -266,6 +288,8 @@ static StoryItem *travel_large_distance(int const no_heal_choice) {
 			  "Start constructing your base by the ocean."
 			};
 			break;
+		default:
+			throw std::invalid_argument("No heal choice must be between 0-2.");
 	}
 
 	std::vector<StoryItem*> story_items {
