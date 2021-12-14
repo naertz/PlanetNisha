@@ -95,8 +95,7 @@ static StoryItem *after_no_heal(int const no_heal_choice) {
 			};
 			break;
 		default:
-			char const *bad_heal_choice = "No heal choice must be between 0-2.";
-			throw std::invalid_argument(bad_heal_choice);
+			throw std::invalid_argument("No heal choice must be between 0-2.");
 	}
 
 	std::vector<StoryItem*> story_items;
