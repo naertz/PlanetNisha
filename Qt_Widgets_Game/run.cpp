@@ -15,7 +15,7 @@
 #include "story.h"
 
 int main(int argc, char *argv[]) {
-	QApplication application(argc, argv);
+	const QApplication application(argc, argv);
 	StoryItem *story_tree;
 	try {
 		story_tree = start_story();

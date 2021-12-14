@@ -18,10 +18,10 @@ static StoryItem *to_be_continued();
 /****************/
 
 StoryItem *start_story() {
-	std::string story_text = "In this game, you have crashed into Nisha: the planet that the government had funded for colonization. Nobody knows why the crash accident happened, but it appears that something smashed into the ship and pulled it inside orbit. There were only five survivors: you (the leader), Engineer Ragnarok Javin, Medical Doctor Skylar Helen, Astronomist Joshua Trevis, and Biologist Leia Mist. Now, let's begin with the first event.";
-	std::string event_text = "You and the other four survivors exit the damaged ship and find that you and (luckily) the medical doctor are the only ones that are uninjured. Unfortunately, most of the medical supplies are either damaged or missing, and there are only enough supplies for two of the injured survivors.";
-	std::string prompt_text = "Whom do you not heal?";
-	std::vector<std::string> options_texts {
+	const std::string story_text = "In this game, you have crashed into Nisha: the planet that the government had funded for colonization. Nobody knows why the crash accident happened, but it appears that something smashed into the ship and pulled it inside orbit. There were only five survivors: you (the leader), Engineer Ragnarok Javin, Medical Doctor Skylar Helen, Astronomist Joshua Trevis, and Biologist Leia Mist. Now, let's begin with the first event.";
+	const std::string event_text = "You and the other four survivors exit the damaged ship and find that you and (luckily) the medical doctor are the only ones that are uninjured. Unfortunately, most of the medical supplies are either damaged or missing, and there are only enough supplies for two of the injured survivors.";
+	const std::string prompt_text = "Whom do you not heal?";
+	const std::vector<std::string> options_texts {
 		"Engineer Ragnarok Javin - broken leg",
 		"Astronomist Joshua Trevis - shrapnel hand wound",
 		"Biologist Leia Mist - burned face"
@@ -39,13 +39,13 @@ std::vector<StoryItem*> story_items;
 	  throw exception;
   }
 
-  std::vector<StoryItemOption> story_options {
+  const std::vector<StoryItemOption> options {
 		{ options_texts[0], story_items[0] },
 		{ options_texts[1], story_items[1] },
 		{ options_texts[2], story_items[2] }
 	};
 
-	StoryItem *start_story = new StoryItem(story_text, event_text, prompt_text, story_options);
+	StoryItem *const start_story = new StoryItem(story_text, event_text, prompt_text, options);
 	return start_story;
 }
 
@@ -54,14 +54,10 @@ std::vector<StoryItem*> story_items;
 /*****************/
 
 static StoryItem *after_no_heal(int const no_heal_choice) {
-	std::string story_text = "";
-	std::string event_text = "";
-	std::string prompt_text = "";
-	std::vector<std::string> options_texts {
-		"",
-		"",
-		""
-	};
+	std::string story_text;
+	std::string event_text;
+	std::string prompt_text;
+	std::vector<std::string> options_texts;
 
 	switch (no_heal_choice) {
 		case 0:
@@ -110,13 +106,13 @@ static StoryItem *after_no_heal(int const no_heal_choice) {
 		throw exception;
 	}
 
-	std::vector<StoryItemOption> story_options {
+	const std::vector<StoryItemOption> options {
 		{ options_texts[0], story_items[0] },
 		{ options_texts[1], story_items[1] },
 		{ options_texts[2], story_items[2] }
 	};
 
-	StoryItem *after_no_heal = new StoryItem(story_text, event_text, prompt_text, story_options);
+	StoryItem *const after_no_heal = new StoryItem(story_text, event_text, prompt_text, options);
 	return after_no_heal;
 }
 
@@ -125,14 +121,10 @@ static StoryItem *after_no_heal(int const no_heal_choice) {
 /****************/
 
 static StoryItem *stay_at_ship(int const no_heal_choice) {
-	std::string story_text = "";
-	std::string event_text = "";
-	std::string prompt_text = "";
-	std::vector<std::string> options_texts {
-		"",
-		"",
-		""
-	};
+	std::string story_text;
+	std::string event_text;
+	std::string prompt_text;
+	std::vector<std::string> options_texts;
 
 	switch (no_heal_choice) {
 		case 0:
@@ -169,31 +161,27 @@ static StoryItem *stay_at_ship(int const no_heal_choice) {
 			throw std::invalid_argument("No heal choice must be between 0-2.");
 	}
 
-	std::vector<StoryItem*> story_items {
+	const std::vector<StoryItem*> story_items {
 		to_be_continued(),
 		to_be_continued(),
 		to_be_continued()
 	};
 
-	std::vector<StoryItemOption> story_options {
+	const std::vector<StoryItemOption> options {
 		{ options_texts[0], story_items[0] },
 		{ options_texts[1], story_items[1] },
 		{ options_texts[2], story_items[2] }
 	};
 
-	StoryItem *stay_at_ship = new StoryItem(story_text, event_text, prompt_text, story_options);
+	StoryItem *const stay_at_ship = new StoryItem(story_text, event_text, prompt_text, options);
 	return stay_at_ship;
 }
 
 static StoryItem *go_to_cave(int const no_heal_choice) {
-	std::string story_text = "";
-	std::string event_text = "";
-	std::string prompt_text = "";
-	std::vector<std::string> options_texts {
-		"",
-		"",
-		""
-	};
+	std::string story_text;
+	std::string event_text;
+	std::string prompt_text;
+	std::vector<std::string> options_texts;
 
 	switch (no_heal_choice) {
 		case 0:
@@ -230,31 +218,27 @@ static StoryItem *go_to_cave(int const no_heal_choice) {
 			throw std::invalid_argument("No heal choice must be between 0-2.");
 	}
 
-	std::vector<StoryItem*> story_items {
+	const std::vector<StoryItem*> story_items {
 		to_be_continued(),
 		to_be_continued(),
 		to_be_continued()
 	};
 
-	std::vector<StoryItemOption> story_options {
+	const std::vector<StoryItemOption> options {
 		{ options_texts[0], story_items[0] },
 		{ options_texts[1], story_items[1] },
 		{ options_texts[2], story_items[2] }
 	};
 
-	StoryItem *go_to_cave = new StoryItem(story_text, event_text, prompt_text, story_options);
+	StoryItem *const go_to_cave = new StoryItem(story_text, event_text, prompt_text, options);
 	return go_to_cave;
 }
 
 static StoryItem *travel_large_distance(int const no_heal_choice) {
-	std::string story_text = "";
-	std::string event_text = "";
-	std::string prompt_text = "";
-	std::vector<std::string> options_texts {
-		"",
-		"",
-		""
-	};
+	std::string story_text;
+	std::string event_text;
+	std::string prompt_text;
+	std::vector<std::string> options_texts;
 
 	switch (no_heal_choice) {
 		case 0:
@@ -291,19 +275,19 @@ static StoryItem *travel_large_distance(int const no_heal_choice) {
 			throw std::invalid_argument("No heal choice must be between 0-2.");
 	}
 
-	std::vector<StoryItem*> story_items {
+	const std::vector<StoryItem*> story_items {
 		to_be_continued(),
 		to_be_continued(),
 		to_be_continued()
 	};
 
-	std::vector<StoryItemOption> story_options {
+	const std::vector<StoryItemOption> options {
 		{ options_texts[0], story_items[0] },
 		{ options_texts[1], story_items[1] },
 		{ options_texts[2], story_items[2] }
 	};
 
-	StoryItem *travel_large_distance = new StoryItem(story_text, event_text, prompt_text, story_options);
+	StoryItem *const travel_large_distance = new StoryItem(story_text, event_text, prompt_text, options);
 	return travel_large_distance;
 }
 
@@ -312,27 +296,27 @@ static StoryItem *travel_large_distance(int const no_heal_choice) {
 /*****************/
 
 static StoryItem *to_be_continued() {
-	std::string story_text = "To be continued...";
-	std::string event_text = "Thank you for playing.";
-	std::string prompt_text = "Created by Noah Allan Ertz";
-	std::vector<std::string> options_texts {
+	const std::string story_text = "To be continued...";
+	const std::string event_text = "Thank you for playing.";
+	const std::string prompt_text = "Created by Noah Allan Ertz";
+	const std::vector<std::string> options_texts {
 		"Play again",
 		"Exit happily",
 		"Exit sadly"
 	};
 
-	std::vector<StoryItem*> story_items {
+	const std::vector<StoryItem*> story_items {
 		nullptr,
 		nullptr,
 		nullptr
 	};
 
-	std::vector<StoryItemOption> story_options {
+	const std::vector<StoryItemOption> options {
 		{ options_texts[0], story_items[0] },
 		{ options_texts[1], story_items[1] },
 		{ options_texts[2], story_items[2] }
 	};
 
-	StoryItem *to_be_continued = new StoryItem(story_text, event_text, prompt_text, story_options);
+	StoryItem *const to_be_continued = new StoryItem(story_text, event_text, prompt_text, options);
 	return to_be_continued;
 }
